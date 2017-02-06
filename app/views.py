@@ -6,6 +6,7 @@ This file creates your application.
 """
 
 from app import app
+import datetime
 from flask import render_template, request, redirect, url_for
 
 
@@ -34,6 +35,18 @@ def send_text_file(file_name):
     """Send your static text file."""
     file_dot_text = file_name + '.txt'
     return app.send_static_file(file_dot_text)
+
+@app.route('/profile')
+def profile():
+    """Render the profile page."""
+    return render_template('profile.html', datetime=timeinfo())
+
+def timeinfo():
+    year = datetime.date.today().strftime("%Y")
+    month = datetime.date.today().strftime("%B")
+    day = datetime.date.today().strftime("%A")
+    date = datetime.date.today().strftime("%d")
+    return "{}, {} {} {}".format(day, date, month, year)
 
 
 @app.after_request
